@@ -55,13 +55,13 @@ const columns: GridColDef[] = [
     field: "author",
     headerName: "Author",
     width: 150,
-    renderCell: (params) => params.value.username || "Unknown",
+    renderCell: (params) => params.value?.author || "Unknown",
   },
   {
     field: "assignee",
     headerName: "Assignee",
     width: 150,
-    renderCell: (params) => params.value.username || "Unassigned",
+    renderCell: (params) => params.value?.assignee || "Unassigned",
   },
 ];
 
@@ -79,9 +79,27 @@ const TableView = ({ id, setIsModalNewTaskOpen }: Props) => {
   return (
     <div className="h-[540px] w-full px-4 pb-8 xl:px-6">
       <div className="pt-5">
-        <Header name="Table" isSmallText />
+        <Header
+          name="Table"
+          buttonComponent={
+            <button
+              className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
+              onClick={() => {
+                setIsModalNewTaskOpen(true);
+              }}
+            >
+              Add Task
+            </button>
+          }
+          isSmallText
+        />
       </div>
-      <DataGrid rows={tasks || []} columns={columns} className={dataGridClassNames} sx={dataGridSxStyles(isDarkMode)} />
+      <DataGrid
+        rows={tasks || []}
+        columns={columns}
+        className={dataGridClassNames}
+        sx={dataGridSxStyles(isDarkMode)}
+      />
     </div>
   );
 };
